@@ -23,6 +23,7 @@ shoot_sound = pygame.mixer.Sound(pygame.mixer.Sound('sound/beep.wav'))
 ennemy_shot = pygame.mixer.Sound(pygame.mixer.Sound('sound/pioupiou.wav'))
 player_impact_sound = pygame.mixer.Sound(pygame.mixer.Sound('sound/kururi.wav'))
 contact_sound = pygame.mixer.Sound(pygame.mixer.Sound("sound/tulut.wav"))
+invincible_sound = pygame.mixer.Sound(pygame.mixer.Sound("sound/tiptip.wav"))
 
 # Colors
 BLACK = (0, 0, 0)
@@ -166,7 +167,7 @@ while running:
             geno_pos = new_geno_pos
 
         # Genocidax shoots randomly
-        if geno_bullet is None: #and random.random() < 0.1:
+        if geno_bullet is None and random.random() < 0.1:
             geno_bullet = [geno_pos[0] + geno_direction[0], geno_pos[1] + geno_direction[1], geno_direction[:]]
             ennemy_shot.play()
             geno_shots += 1
@@ -229,10 +230,6 @@ while running:
                 invincible_timer = pygame.time.get_ticks()
                 break
 
-
-
-
-
     # Draw everything
     screen.fill(BLACK)
 
@@ -240,8 +237,8 @@ while running:
     if invincible:
         time_left = max(0, 3000 - (pygame.time.get_ticks() - invincible_timer))  # 3 sec
         bar_width = int((time_left / 3000) * width)
-        pygame.draw.rect(screen, BLUE, (0, height - 10, width, 10))       # BLUE background
-        pygame.draw.rect(screen, CYAN, (0, height - 10, bar_width, 10))    # Cyan barre
+        pygame.draw.rect(screen, YELLOW, (0, height - 10, width, 10))       # YELLOW background
+        pygame.draw.rect(screen, CYAN, (0, height - 10, bar_width, 10))    # CYAN barre
 
 
 
@@ -268,7 +265,7 @@ while running:
   
     # Display scores
     font = pygame.font.Font(font_path, 20)
-    # score_text = font.render(f'GENOCIDAX: {geno_score:03d}   TOI: {player_score:03d}', True, WHITE)
+    # score_text = font.render(f'GENOCIDAX: {geno_score:03d}   YOU: {player_score:03d}', True, WHITE)
     score_text = font.render(
     f'GENOCIDAX: {geno_score:03d} ({geno_shots}, {geno_accuracy}%)   YOU: {player_score:03d} ({player_shots}, {player_accuracy}%)',
     True, WHITE
